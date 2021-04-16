@@ -5,4 +5,3 @@ __pycache__
 *.out
 *.slurm
 rsync_exclude.txt
-.DS_Storeß
