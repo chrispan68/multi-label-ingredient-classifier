@@ -3,4 +3,3 @@ checkpoint
 __pycache__
 .vscode
 *.out
-*.slurm
