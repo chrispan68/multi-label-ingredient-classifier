@@ -8,8 +8,8 @@ import torchvision
 import torchvision.transforms as transforms
 import os
 import sys
+from sklearn.metrics import classification_report, roc_curve, auc
 import matplotlib.pyplot as plt
-from sklearn.metrics import classification_report
 
 class Resnet50(nn.Module):
     '''
@@ -139,9 +139,10 @@ def train(
         if (epoch + 1) % eval_interval == 0:
             print("Evaluating:")
             sys.stdout.flush()
-            results = evaluate(model, test_loader, num_labels, ingredients)
+            results, _, _, area = evaluate(model, test_loader, num_labels, ingredients)
             print("Epoch [{}/{}] Validation Results".format(epoch+1, num_epochs))
             print(results)
+            print("ROC Curve AUC. Micro: {} Macro: {}.".format(area['micro'], area['macro']))
             sys.stdout.flush()
 
     # Save final version of the model
@@ -179,11 +180,22 @@ def test(model_filename, data_dir):
 
     print("Beginning Testing...")
     sys.stdout.flush()
-    results = evaluate(model, test_loader, num_labels, ingredients)
-    print("Testing Results")
+    results, tpr, fpr, area = evaluate(model, test_loader, num_labels, ingredients)
+    print("Testing Results:")
     print(results)
-    sys.stdout.flush()
 
+    #Plot precision recall curve
+    plt.title('ROC-Curves')
+    plt.plot(fpr['micro'], tpr['micro'], 'b', label = 'Micro-AUC = %0.4f' % area['micro'])
+    plt.plot(fpr['macro'], tpr['macro'], 'g', label = 'Macro-AUC = %0.4f' % area['macro'])
+    plt.legend(loc = 'lower right')
+    plt.plot([0, 1], [0, 1],'r--')
+    plt.xlim([0, 1])
+    plt.ylim([0, 1])
+    plt.ylabel('True Positive Rate')
+    plt.xlabel('False Positive Rate')
+    plt.savefig('analysis/roc-curves.jpg')
+    
 def evaluate(model, dataloader, num_labels, ingredients):
     '''
     Returns the classification report for the model
@@ -191,6 +203,7 @@ def evaluate(model, dataloader, num_labels, ingredients):
     # Toggle flag
     model.eval()
     y_pred = []
+    y_scores = []
     y_truth = []
     with torch.no_grad():
         for images, labels in dataloader:
@@ -199,9 +212,40 @@ def evaluate(model, dataloader, num_labels, ingredients):
             labels = torch.squeeze(labels.to(device))
             pred_labels = outputs  > 0.5
             y_pred.append(pred_labels.cpu().numpy().astype(int))
+            y_scores.append(outputs.cpu().numpy())
             y_truth.append(labels.cpu().numpy())
-    return classification_report(y_truth, y_pred, target_names=ingredients)
 
+    y_pred = np.asarray(y_pred)
+    y_scores = np.asarray(y_scores)
+    y_truth = np.asarray(y_truth)
+
+    # Compute precision recall curve
+    tpr, fpr = get_roc_curve(y_truth, y_scores, num_labels)
+    area = {}
+    area['micro'] = auc(fpr['micro'], tpr['micro'])
+    area['macro'] = auc(fpr['macro'], tpr['macro'])
+    return classification_report(y_truth, y_pred, target_names=ingredients), tpr, fpr, area
+
+def get_roc_curve(y_truth, y_scores, num_labels):
+    fpr = {}
+    tpr = {}
+    for i in range(num_labels):
+        fpr[i], tpr[i], _ = roc_curve(y_truth[:, i], y_scores[:, i])
+    
+    fpr['micro'], tpr['micro'], _ = roc_curve(y_truth.ravel(), y_scores.ravel())
+    
+    all_fpr = np.unique(np.concatenate([fpr[i] for i in range(num_labels)]))
+    # Then interpolate all ROC curves at this points
+    mean_tpr = np.zeros_like(all_fpr)
+    for i in range(num_labels):
+        mean_tpr += np.interp(all_fpr, fpr[i], tpr[i])
+
+    # Finally average it and compute AUC
+    mean_tpr /= num_labels
+    fpr["macro"] = all_fpr
+    tpr["macro"] = mean_tpr
+    return tpr, fpr
+    
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--mode", type=str, choices=["train", "test"], default="train")
