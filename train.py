@@ -10,7 +10,8 @@ import os
 import sys
 from sklearn.metrics import classification_report, roc_curve, auc
 import matplotlib.pyplot as plt
-from utils import get_ingredients_list, get_roc_curve, evaluate
+from utils import get_roc_curve, evaluate
+from data_utils import get_ingredients_list
 from model import Resnet50
 
 def train(

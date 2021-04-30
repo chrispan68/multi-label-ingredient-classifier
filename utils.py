@@ -12,47 +12,12 @@ import matplotlib.pyplot as plt
 from nearest_neighbor_query import ImageNearestNeighbors, encode
 from tqdm import tqdm
 
-def read_inputs(images_file, labels_file, data_dir):
-    """
-    Reads the images and labels from files
-    Input: 
-        images_file: the file containing image filenames
-        labels_file: the file that the labels are read from
-    Output:
-        images: list of image filenames. 
-        labels: returns a dictionary from filename to numpy labels
-    """
-    images = []
-    with open("{}/SplitAndIngreLabel/{}".format(data_dir, images_file)) as f:
-        for line in f:
-            images.append(line.split()[0])
-    
-    labels = {}
-    with open("{}/SplitAndIngreLabel/{}".format(data_dir, labels_file)) as f:
-        for line in f:
-            words = line.split()
-            filename = words[0]
-            #Converts the labels from -1, 1 to 0, 1
-            labels[filename] = (np.asarray([int(i) for i in words[1:]]) + 1) * 0.5
-
-    return images, labels
-
-
-def get_ingredients_list(data_dir):
-    '''
-    Returns the list of ingredients. 
-    '''
-    filename = data_dir + "/SplitAndIngreLabel/IngredientList.txt"
-    ingredients = []
-    with open(filename) as f:
-        for line in f:
-            ingredients.append(line.rstrip("\n"))
-    return ingredients
-
 def evaluate(model, dataloader, num_labels, ingredients, device, mode="baseline", search_tree=None):
     '''
     Returns the classification report for the model
     '''
+    thresh_prediction = 0.5 
+    thresh_concensus = 0.8 #80% of neighbors have to agree for class to be positive. 
     # Toggle flag
     model.eval()
     y_pred = []
@@ -61,15 +26,22 @@ def evaluate(model, dataloader, num_labels, ingredients, device, mode="baseline"
     with torch.no_grad():
         for images, labels in tqdm(dataloader, total=len(dataloader)):
             images = images.to(device)
-            outputs = torch.squeeze(model(images)).cpu().numpy()
-            pred_labels = (outputs  > 0.5).astype(int)
+            if(mode == "baseline"):
+                outputs = model(images).cpu().numpy()
+                pred_labels = (outputs  > thresh_prediction).astype(int)
             if(mode == "neighborhood_search"):
-                neighborhood_concensus = search_tree.query(outputs)
-                pred_labels = np.max(pred_labels, neighborhood_concensus)
-            labels = torch.squeeze(labels.to(device)).cpu().numpy()
-            y_pred.append(pred_labels)
-            y_scores.append(outputs)
-            y_truth.append(labels)
+                model_outputs = model(images).cpu().numpy()
+                outputs = search_tree.batch_query(model_outputs)
+                pred_labels = outputs > thresh_concensus
+            elif(mode == "both"):
+                model_outputs = model(images).cpu().numpy()
+                neighbor_outputs = search_tree.batch_query(model_outputs)
+                outputs = model_outputs
+                pred_labels = np.maximum((model_outputs > thresh_prediction), (neighbor_outputs > thresh_concensus))
+            labels = labels.to(device).cpu().numpy()
+            y_pred.extend(list(pred_labels))
+            y_scores.extend(list(outputs))
+            y_truth.extend(list(labels))
 
     y_pred = np.asarray(y_pred)
     y_scores = np.asarray(y_scores)

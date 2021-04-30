@@ -10,16 +10,19 @@ import os
 import sys
 from sklearn.metrics import classification_report, roc_curve, auc
 import matplotlib.pyplot as plt
-from utils import get_ingredients_list, get_roc_curve, evaluate
+from utils import get_roc_curve, evaluate
+from data_utils import get_ingredients_list
 from model import Resnet50
 from nearest_neighbor_query import ImageNearestNeighbors, encode
+import torch.multiprocessing
+torch.multiprocessing.set_sharing_strategy('file_system')
 
-def test(model_filename, data_dir, mode):
+def test(model_filename, data_dir, mode, output_dir, batch_size):
     '''
     Evaluates the model on the test set. 
     '''
     num_labels = 353
-    test_params = {"batch_size": 1, "shuffle": True, "num_workers": 1}
+    test_params = {"batch_size": batch_size, "shuffle": True, "num_workers": 1}
     test_transforms = transforms.Compose(
         [transforms.Resize((224, 224)), transforms.ToTensor()]
     )
@@ -32,7 +35,7 @@ def test(model_filename, data_dir, mode):
 
     print("Loading model...")
     sys.stdout.flush()
-    model = Resnet50(num_labels, False).to(device)
+    model = Resnet50(num_labels, True).to(device)
     model.load_state_dict(torch.load("checkpoint/{}".format(model_filename), map_location=device))
     
     if torch.cuda.device_count() > 1: 
@@ -41,11 +44,12 @@ def test(model_filename, data_dir, mode):
         model = nn.DataParallel(model)
     model = model.to(device)
 
-    print("Beginning Testing...")
+    print("Initializing Tests...")
     search_tree = None
-    if mode == "neighborhood_search":
-        search_tree = ImageNearestNeighbors()
+    if mode == "neighborhood_search" or mode == "both":
+        search_tree = ImageNearestNeighbors(data_dir=data_dir)
     sys.stdout.flush()
+    print("Evaluating Model...")
     results, tpr, fpr, area = evaluate(model, test_loader, num_labels, ingredients, device, mode, search_tree)
     print("Testing Results:")
     print(results)
@@ -60,23 +64,29 @@ def test(model_filename, data_dir, mode):
     plt.ylim([0, 1])
     plt.ylabel('True Positive Rate')
     plt.xlabel('False Positive Rate')
-    plt.savefig('analysis/roc-curves.jpg')
+    plt.savefig('{}/roc-curves.jpg'.format(output_dir))
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", type=str, choices=["baseline, neighborhood_search"], default="baseline")
+    parser.add_argument("--mode", type=str, choices=["baseline", "neighborhood_search", "both"], default="baseline")
     parser.add_argument("--model_filename", type=str, default="model.bin")
     parser.add_argument("--data_dir", type=str, default="data")
+    parser.add_argument("--output_dir", type=str, default="analysis")
+    parser.add_argument("--batch_size", type=int, default=1)
     args = parser.parse_args()
     args = vars(args)
 
     mode = args["mode"]
     model_filename = args["model_filename"]
     data_dir = args["data_dir"]
+    output_dir = args["output_dir"]
+    batch_size = args["batch_size"]
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     test(
         model_filename,
         data_dir, 
-        mode
+        mode,
+        output_dir, 
+        batch_size
     )

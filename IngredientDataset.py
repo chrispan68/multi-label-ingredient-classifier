@@ -4,7 +4,7 @@ from glob import glob
 from PIL import Image
 import torch
 from torch.utils import data
-from utils import read_inputs
+from data_utils import read_inputs
 
 class IngredientDataset(data.dataset.Dataset):
     def __init__(self, images_file, labels_file, transforms, data_dir = "data"):

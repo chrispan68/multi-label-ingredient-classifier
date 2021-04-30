@@ -1,0 +1,361 @@
+Testing Results:
+                                            precision    recall  f1-score   support
+
+                        Minced green onion       0.77      0.81      0.79      6698
+                 chiffonade of green onion       0.74      0.60      0.66       666
+                        Seared green onion       0.65      0.26      0.37       731
+                               White onion       0.78      0.77      0.78       144
+                        Brunoise diced ham       0.83      0.67      0.74       435
+                             Julienned ham       0.67      0.20      0.31        10
+                                       Ham       1.00      0.17      0.29        24
+                                Sliced ham       0.21      0.07      0.10        46
+                     Brunoise diced carrot       0.77      0.69      0.73       868
+                             Sliced carrot       0.67      0.46      0.55       365
+                           Batonnet carrot       0.70      0.17      0.27        41
+                          Julienned carrot       0.76      0.57      0.65       699
+                      Hob blocks of carrot       0.76      0.61      0.67       387
+                              Black sesame       0.75      0.58      0.65      1639
+                              White sesame       0.85      0.62      0.72        76
+                            Crushed pepper       0.74      0.69      0.71      4353
+                           Shredded pepper       0.75      0.47      0.58      1138
+                             Pepper slices       0.76      0.64      0.70      1570
+                             Seared pepper       0.43      0.22      0.29        41
+                                    Pepper       0.51      0.30      0.38        99
+                        Whole green pepper       0.89      0.82      0.85       218
+                  Chinese Parsleycoriander       0.81      0.73      0.77      3886
+                              Bean sprouts       0.85      0.48      0.61       187
+                                     Bacon       0.50      0.14      0.22         7
+                            Tomato sclices       0.83      0.67      0.74       493
+                      Cherry tomato slices       0.38      0.23      0.29        78
+                             Cherry tomato       0.59      0.55      0.57       213
+                          Green vegetables       0.68      0.46      0.55      1370
+            chiffonade of green vegetables       0.39      0.29      0.33        49
+                              Corn kernels       0.92      0.75      0.83       460
+                               Corn blocks       0.80      0.43      0.55       101
+                       Bitter gourd slices       0.92      0.72      0.81       267
+                                  Broccoli       0.60      0.76      0.67       315
+                               Cauliflower       0.91      0.82      0.86       255
+                                     Toast       0.50      0.28      0.36        18
+                                     Bread       0.00      0.00      0.00         9
+                          Chinese mahogany       1.00      0.67      0.80         6
+                               Crab sticks       0.50      0.06      0.11        17
+                        Bamboo shoots tips       0.15      0.17      0.16        18
+                              Chive pieces       0.88      0.65      0.75       222
+                            Chopped chives       0.65      0.83      0.73        48
+                                    Chives       0.93      0.92      0.92       201
+                            Shredded onion       0.59      0.22      0.32        88
+                              Onion slices       0.43      0.26      0.32       303
+                      Brunoise diced onion       0.33      0.18      0.23        17
+                            Pumpkin blocks       0.76      0.60      0.67        47
+                         Groundnut kernels       0.80      0.57      0.67       970
+                 Crushed groundnut kernels       0.34      0.22      0.27        64
+                                     Lemon       0.26      0.21      0.23        86
+                     Shelled fresh shrimps       0.84      0.69      0.76       361
+                          Dried sea shrimp       0.62      0.31      0.42        16
+                              Fresh Shrimp       0.77      0.74      0.76       635
+                                  Crayfish       0.93      0.96      0.94       221
+                        Julienned cucumber       0.67      0.64      0.66       325
+                         Batonnet cucumber       0.61      0.26      0.37        95
+                    Hob blocks of cucumber       0.81      0.78      0.79       269
+                           Cucumber slices       0.77      0.60      0.68       548
+                   Brunoise diced cucumber       0.82      0.70      0.76       466
+                 Crushed hot and dry chili       0.69      0.62      0.65      3241
+                        Hot and dry pepper       0.66      0.51      0.58      1103
+                 Hot and dry pepper powder       0.66      0.70      0.68       314
+              Chiffonade of purple cabbage       0.71      0.21      0.32        24
+                           Chinese cabbage       0.81      0.82      0.82       202
+                              Black fungus       0.88      0.67      0.76      1003
+                     Perilla crispa tanaka       0.00      0.00      0.00         5
+                             Ginger slices       0.39      0.12      0.18       154
+                          Julienned ginger       0.43      0.41      0.42       171
+                            Chopped ginger       0.27      0.41      0.33        39
+                             Scrambled egg       0.89      0.88      0.89      1684
+                                  Egg cake       0.74      0.69      0.71       125
+                         Crushed egg crepe       0.75      0.70      0.73        61
+                         Spiced corned egg       0.77      0.70      0.73       138
+                                  Egg yolk       1.00      0.60      0.75         5
+                       Steamed egg custard       0.81      0.76      0.78       249
+                          Boild egg slices       0.65      0.68      0.67       196
+                                Boild eggs       0.88      0.90      0.89       221
+                                  Egg drop       0.90      0.92      0.91       145
+                        Shredded egg crepe       0.25      0.08      0.12        25
+                                Quail eggs       0.00      0.00      0.00         9
+                               Minced pork       0.75      0.38      0.50        16
+                                 Wolfberry       0.81      0.65      0.72       305
+                               Minced pork       0.79      0.69      0.74      1415
+                             Shredded pork       0.90      0.67      0.77      1147
+                       Streaky pork slices       0.72      0.76      0.74      1669
+                               Pork slices       0.73      0.55      0.62       795
+                               Pork chunks       0.83      0.58      0.68       337
+                       Streaky pork chunks       0.57      0.41      0.48       132
+                         Cured meat chunks       0.71      0.47      0.57        36
+                             kale borecole       0.62      0.23      0.33        22
+                           Pork intestines       0.88      0.87      0.87       179
+                                   Lettuce       0.68      0.65      0.67       680
+                             Steamed bread       0.96      0.55      0.70        40
+                                 Red dates       0.86      0.81      0.84       317
+                                      Kiwi       1.00      0.60      0.75         5
+                              Garlic clove       0.54      0.35      0.42       554
+                            Crushed garlic       0.72      0.51      0.59      1936
+                               Garlic bulb       0.61      0.74      0.67        47
+                           Lentinus edodes       0.73      0.52      0.61       326
+                    Lentinus edodes slices       0.82      0.44      0.58       209
+            Brunoise diced lentinus edodes       0.23      0.27      0.25        33
+                       Pleurotus ostreatus       0.62      0.56      0.59         9
+                           Poplar Mushroom       0.89      0.75      0.81       197
+                            Dried mushroom       0.77      0.71      0.74       210
+                      White beech mushroom       0.00      0.00      0.00         3
+                               Yam chunks        0.89      0.68      0.77       120
+                                 White yam       0.96      0.87      0.92        93
+                                Yam slices       1.00      1.00      1.00         2
+                                Strawberry       0.25      0.06      0.10        17
+                              Sea cucumber       0.88      0.74      0.81       171
+                          Shanghai cabbage       0.76      0.83      0.80       342
+                                 Asparagus       0.33      0.23      0.27        13
+                      Bamboo shoots chunks       0.00      0.00      0.00         9
+                    Shredded bamboo shoots       0.79      0.35      0.48       138
+                                      Rice       0.94      0.85      0.89      1817
+                                Meat balls       0.84      0.76      0.80       135
+                                Beaf balls       0.00      0.00      0.00         4
+                              Shrimp balls       0.10      0.25      0.14         4
+                                Fish balls       0.60      0.14      0.23        43
+                             blueberry jam       0.96      0.87      0.92        93
+                             Orange slices       0.67      0.14      0.24        14
+                                     Mango       0.51      0.73      0.60        66
+                                   Noodles       0.89      0.85      0.87      1051
+                               Beef chunks       0.83      0.66      0.74      1130
+                               Beef slices       0.70      0.65      0.68       309
+                         Sliced Fatty Beef       0.87      0.88      0.87       174
+                               Tofu chunks       0.84      0.73      0.78      1113
+                            Chiba beancurd       0.33      0.12      0.18        16
+                            Fish bean curd       1.00      0.09      0.17        11
+                               Stinky tofu       0.71      0.67      0.69       241
+                  Shredded dried bean curd       0.82      0.43      0.56       156
+                      Hob blocks of potato       0.87      0.75      0.81      1009
+                             Potato slices       0.43      0.07      0.12        43
+                           Shredded potato       0.97      0.87      0.92       281
+                           Mashed potatoes       0.79      0.50      0.61       257
+                           Batonnet potato       0.26      0.13      0.17        46
+                                 Chili oil       0.80      0.76      0.78      2134
+                              Chili saurce       0.63      0.51      0.56       443
+                              Chili powder       0.25      0.12      0.16        33
+                      Garlic sprout pieces       0.80      0.78      0.79       343
+              Brunoise diced garlic sprout       0.38      0.13      0.19        23
+                             Garlic leaves       0.54      0.51      0.52       289
+                       Pickled red peppers       0.84      0.73      0.78       206
+       Pickled capsicum annum fasciculatum       0.79      0.79      0.79       218
+Minced pickled capsicum annum fasciculatum       0.80      0.41      0.54        85
+                             Shredded kelp       0.91      0.85      0.88       173
+                                      kelp       0.62      0.42      0.50        38
+                                  Bullfrog       0.86      0.70      0.78       419
+                                    Caviar       0.00      0.00      0.00         5
+                         Lotus root slices       0.94      0.69      0.80       217
+                         Lotus root chunks       0.92      0.84      0.88       193
+                            Lotus root box       0.81      0.82      0.81       106
+                           Celtuce sclices       0.76      0.59      0.66       143
+                          Batonnet celtuce       0.32      0.15      0.21        39
+                          Shredded celtuce       1.00      0.50      0.67         2
+                       Sweet potato chunks       0.47      0.29      0.36        24
+                            Sausage slices       0.82      0.91      0.87       163
+                                   Cabbage       0.86      0.72      0.78       330
+                     chiffonade of cabbage       0.61      0.46      0.52        90
+                                 Spareribs       0.90      0.62      0.73       848
+                                     Clams       0.77      0.88      0.82       176
+                            Lilium brownii       0.62      0.20      0.30        40
+                      Fermented vegetables       0.82      0.80      0.81       300
+                     Double-side fried egg       0.89      0.79      0.83       454
+              Sliced double-side fried egg       1.00      0.21      0.35        14
+                             Radish slices       0.55      0.19      0.29        31
+                          Batonnet radish        0.06      0.33      0.10         3
+                      Hob blocks of radish       0.31      0.38      0.34        13
+                          Julienned radish       0.00      0.00      0.00         2
+                     Mashed pickled radish       0.20      0.06      0.09        17
+                     Pickled radish slices       0.67      0.25      0.36         8
+                                 flatbread       0.47      0.39      0.42        57
+                              Spring rolls       0.89      0.72      0.80       172
+                            Chicken chunks       0.79      0.73      0.76       966
+                    Brunoise diced chicken       0.88      0.70      0.78       503
+                       Tentacles of Squid        0.81      0.76      0.78       243
+                              Squid pieces       1.00      0.16      0.28        25
+                               Squid rings       0.33      0.07      0.12        14
+                        White gourd chunks       0.90      0.81      0.85       205
+                 Dried pieces of bean curd       0.85      0.42      0.56       237
+                            Yellow peaches       0.74      0.80      0.77        25
+                                 Pineapple       0.96      0.88      0.92       230
+                                  Eggplant       0.84      0.79      0.81       194
+                            Eggplant slice       0.75      0.23      0.35        26
+                         Batonnet eggplant       0.29      0.11      0.15        19
+                    Hob blocks of eggplant       0.85      0.74      0.79       454
+                           Eggplant sticks       0.82      0.59      0.68       109
+                              Water mellon       0.00      0.00      0.00         2
+                                    Gluten       0.88      0.79      0.83       119
+                             Gluten chunks       0.62      0.42      0.50        74
+                                 Dumplings       0.78      0.79      0.78       233
+                         Fried bread stick       0.92      0.85      0.88       209
+                 Chopped fried bread stick       1.00      0.67      0.80         3
+                       Hot pickled mustard       0.69      0.46      0.55       138
+                             Sesame sauce        0.50      0.03      0.06        33
+                          Soya-bean sprout       0.39      0.34      0.37        38
+                       Shredded beef tripe       0.70      0.34      0.46       157
+                             Water spinach       0.86      0.74      0.80       253
+            Shredded pickled Bamboo Shoots       0.86      0.55      0.67        99
+                     barbecued pork slices       0.81      0.89      0.85       164
+                     barbecued pork chunks       0.00      0.00      0.00         4
+                              Chicken Feet       0.83      0.82      0.82       304
+                 Cold steamed rice noodles       0.95      0.79      0.86       185
+                             Mutton slices       0.79      0.60      0.69       250
+                             Mutton chunks       0.58      0.27      0.37       110
+       Crushed Small loaf of steamed bread       0.96      0.88      0.92       102
+               Small loaf of steamed bread       0.96      0.92      0.94       258
+                              Starch sheet       0.67      0.30      0.41        27
+                                      Yuba       0.86      0.56      0.68       211
+                               Okra slices       0.74      0.81      0.77       108
+                                  Chestnut       0.67      0.48      0.56        25
+                     Preserved egg chunks        0.88      0.82      0.85       397
+                     Crushed preserved egg       0.73      0.95      0.82       248
+                       Whole preserved egg       0.53      0.56      0.55        16
+                                     Laver       0.91      0.89      0.90       149
+                         Fried dough twist       0.00      0.00      0.00         5
+                                    Longan       0.15      0.17      0.16        12
+                               Stewed Pork       0.90      0.78      0.84       111
+                                     Beans       0.87      0.83      0.85       423
+                              Minced beans       0.00      0.00      0.00         4
+                      Minced pickled beans       0.84      0.67      0.74       218
+               Sweet fermented flour paste       0.61      0.40      0.48        57
+                               River snail       0.95      0.86      0.91       199
+                                   Spinach       0.70      0.61      0.65        80
+                                 Sea sedge       0.96      0.86      0.91       285
+                                   Bracken       0.69      0.18      0.28        51
+                          Coprinus comatus       0.20      0.25      0.22         4
+                               Lime leaves       0.40      0.53      0.46        32
+                                lemongrass       0.40      0.31      0.35        13
+                                      Lime       0.20      0.50      0.29         2
+                             Chicken Wings       0.60      0.62      0.61       461
+                                 Snow peas       0.83      0.86      0.85       169
+                         Pickled vegetable       1.00      0.10      0.18        31
+                                Salted egg       0.09      0.11      0.10         9
+                                     Curry       0.83      0.59      0.69       243
+                       Black pepper powder       0.67      0.33      0.44         6
+                               Fried flour       0.79      0.73      0.76       986
+                       Whole black chicken       0.55      0.47      0.51        36
+                      Black chicken chunks       0.83      0.85      0.84       199
+                       Celery stalk slices       0.85      0.88      0.87       187
+                              Celery stalk       0.62      0.25      0.36        20
+                             Celery leaves       1.00      0.16      0.27        19
+                                    Celery       0.69      0.43      0.53       370
+                     Brunoise diced celery       0.78      0.41      0.54        17
+                             Banana slices       0.67      0.50      0.57         4
+                              Apple chunks       1.00      1.00      1.00         1
+                                    Loofah       0.63      0.84      0.72       138
+                               Fish slices       0.87      0.85      0.86       574
+                               fish chunks       0.81      0.25      0.38        68
+                                      Fish       0.81      0.85      0.83       751
+                           zucchini slices       0.59      0.37      0.45        65
+                     Boiled chicken slices       0.89      0.73      0.81       525
+                      Whole boiled chicken       0.50      0.14      0.22         7
+                         Tenderloin slices       0.92      0.64      0.75       300
+                         Tenderloin chunks       0.54      0.33      0.41        60
+                       Batonnet tenderloin       0.71      0.71      0.71       354
+                              White congee       0.75      0.99      0.85       243
+                                 Spaghetti       0.93      0.83      0.88       184
+                                     Steak       0.83      0.83      0.83       283
+                              Cumin powder       0.36      0.21      0.26       102
+                               Beef tripes       0.00      0.00      0.00         4
+                                 Pine nuts       0.86      0.95      0.90       205
+                                   Gemelli       0.56      0.47      0.51        32
+                        Korean chili sauce       0.78      0.62      0.69        40
+                               kidney bean       0.00      0.00      0.00         7
+                        Zanthoxylum fagara       0.64      0.39      0.48       429
+                               Rice noodle       0.93      0.71      0.80       109
+                           Fried yuba skin       0.91      0.65      0.76       107
+                            Salad dressing       0.73      0.55      0.63       146
+                                 Soya bean       0.41      0.41      0.41        56
+                         Fern root noodles       0.80      0.91      0.85       156
+                                   ketchup       0.71      0.21      0.32        73
+                                 Mint leaf       0.56      0.48      0.52       147
+                                 Soy sauce       0.58      0.32      0.42        34
+                      Baby Chinese Cabbage       0.92      0.83      0.87       130
+                                     Water       0.90      0.85      0.88      2078
+                               Lotus seeds       0.75      0.53      0.62        73
+                               Azuki bean        1.00      0.33      0.50        12
+                             Green soybean       0.65      0.32      0.43        68
+                                   Parsley       0.76      0.77      0.77      1230
+                                 Duck neck       0.74      0.81      0.77       124
+                    Thick broad-bean sauce       0.00      0.00      0.00         2
+                            Enoki mushroom       0.48      0.14      0.22        99
+                             Crystal sugar       0.89      0.79      0.84       103
+                                    Cashew       0.66      0.30      0.41        77
+                               Steamed Bun       0.88      0.96      0.92       287
+                                Sour sauce       0.62      0.43      0.51        67
+                                  Pork leg       0.82      0.65      0.73       298
+                                   Bayleaf       0.25      0.14      0.18         7
+                                    shumai       0.93      0.82      0.88       256
+                                  Crap roe       0.71      0.88      0.78        56
+                               Shrimp eggs       0.33      0.20      0.25         5
+                           Button mushroom       0.65      0.48      0.55        54
+                             Coconut water       0.58      0.78      0.66        91
+                            Glutinous rice       0.88      0.74      0.80        94
+               Sweet potato starch noodles       0.82      0.74      0.78       427
+                                Vermicelli       0.90      0.84      0.87       685
+                      Fermented soya beans       0.57      0.26      0.36       115
+                             Rice dumpling       0.83      0.91      0.87       152
+                      Sweetened bean paste       0.00      0.00      0.00         4
+                           Sweet dumplings       0.96      0.86      0.91       148
+                          Rice noodle roll       0.79      0.88      0.83       137
+                                       Pea       0.71      0.77      0.74       350
+                                Pork floss       0.55      0.44      0.49        94
+                          Scallion pancake       0.75      0.70      0.72       187
+                                Black rice       0.71      0.63      0.67        19
+                         Small crispy rice       0.59      0.57      0.58        23
+                              Coconut cake       0.87      0.80      0.83        60
+                 Shredded coconut stuffing       0.60      0.33      0.43         9
+                                   Mussels       0.00      0.00      0.00         2
+                                Pork lungs       0.81      0.80      0.80       176
+                            Crispy sausage       0.50      0.11      0.18         9
+                       Codonopsis pilosula       0.68      0.45      0.55        33
+                           Radix Astragali       0.40      0.22      0.29         9
+                          American genseng       1.00      0.12      0.22         8
+                        Cordyceps sinensis       0.50      1.00      0.67         2
+                                   Aniseed       0.44      0.28      0.34        76
+                                    Raisin       0.50      0.12      0.20         8
+                              Suckling pig       0.93      0.78      0.85       114
+                      Steamed twisted roll       0.92      0.80      0.86       159
+                                     Grape       0.33      0.25      0.29         4
+                                Pork paste       0.95      0.90      0.92       140
+                                    Cheese       0.75      0.52      0.61        29
+                                    Wonton       0.86      0.93      0.89       168
+                                 Duck head       0.93      0.84      0.89       147
+                              Chinese Kale       0.90      0.84      0.87       286
+                              Chicken legs       0.62      0.54      0.58       228
+                             Whole chicken       0.76      0.59      0.66       157
+                          Shredded chicken       0.75      0.48      0.58       267
+                      Sweet and sour sauce       0.82      0.71      0.76       707
+                                 Fish head       0.95      0.89      0.92       305
+                       Steamed Rice Powder       0.85      0.82      0.84       238
+                                   Scallop       0.92      0.95      0.94       256
+                                  Macaroni       0.29      0.40      0.33         5
+                                Ribbonfish       0.75      0.64      0.69       262
+                                Tea-leaves       0.36      0.60      0.45        15
+                                    Millet       0.91      0.85      0.88       162
+                      Preserved vegetables       0.80      0.88      0.83       300
+                                  CoixSeed       0.52      0.71      0.60        34
+                               Green beans       0.96      0.84      0.90       224
+                              White fungus       0.93      0.87      0.90       175
+                                   Crucian       0.92      0.88      0.90       175
+                                   Vinegar       0.39      0.37      0.38        19
+                                  Pancakes       0.72      0.65      0.69        92
+                                Crispbread       0.77      0.36      0.49        28
+                              Mango chunks       0.77      0.60      0.67        97
+                                      Crab       0.98      0.89      0.93       219
+                            Soya-bean milk       1.00      0.23      0.38        13
+                   Fermented soybean paste       0.00      0.00      0.00        48
+                              Oyster sauce       0.82      0.90      0.86       191
+                         Spare ribs chunks       0.85      0.78      0.81       214
+                           Green soy beans       0.85      0.94      0.89       143
+                                    Cherry       0.25      0.16      0.20        25
+                         Shredded pig ears       1.00      1.00      1.00         2
+
+                                 micro avg       0.79      0.69      0.74     99692
+                                 macro avg       0.68      0.54      0.58     99692
+                              weighted avg       0.78      0.69      0.73     99692
+                               samples avg       0.76      0.70      0.71     99692
