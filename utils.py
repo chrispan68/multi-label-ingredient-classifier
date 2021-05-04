@@ -9,7 +9,7 @@ import os
 import sys
 from sklearn.metrics import classification_report, roc_curve, auc
 import matplotlib.pyplot as plt
-from nearest_neighbor_query import ImageNearestNeighbors, encode
+from nearest_neighbor_query import ImageNearestNeighbors
 from tqdm import tqdm
 
 def evaluate(model, dataloader, num_labels, ingredients, device, mode="baseline", search_tree=None):
