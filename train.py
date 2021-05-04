@@ -1,6 +1,6 @@
 import argparse
 import numpy as np
-from IngredientDataset_1M import IngredientDataset
+from IngredientDataset import IngredientDataset
 import torch
 import torch.nn as nn
 from torch.utils import data
@@ -28,7 +28,7 @@ def train(
     '''
     Trains the model on the training set and validation set. 
     '''
-    num_labels = 1000
+    num_labels = 353
     train_params = {"batch_size": batch_size, "shuffle": True, "num_workers": 1}
     test_params = {"batch_size": 1, "shuffle": True, "num_workers": 1}
     train_transforms = transforms.Compose(
