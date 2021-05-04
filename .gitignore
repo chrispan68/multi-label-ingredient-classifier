@@ -7,3 +7,4 @@ __pycache__
 rsync_exclude.txt
 *.pyc 
 .DS_Store
+scratch

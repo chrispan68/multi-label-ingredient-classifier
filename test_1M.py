@@ -1,6 +1,6 @@
 import argparse
 import numpy as np
-from IngredientDataset import IngredientDataset
+from IngredientDataset_1M import IngredientDataset
 import torch
 import torch.nn as nn
 from torch.utils import data
@@ -11,9 +11,9 @@ import sys
 from sklearn.metrics import classification_report, roc_curve, auc
 import matplotlib.pyplot as plt
 from utils import get_roc_curve, evaluate
-from data_utils import get_ingredients_list
+from data_utils import get_ingredients_list_1M
 from model import Resnet50
-from nearest_neighbor_query import ImageNearestNeighbors, encode
+from nearest_neighbor_query import ImageNearestNeighbors
 import torch.multiprocessing
 torch.multiprocessing.set_sharing_strategy('file_system')
 
@@ -31,11 +31,11 @@ def test(model_filename, data_dir, mode, output_dir, batch_size):
     sys.stdout.flush()
     test_dataset = IngredientDataset("TE.txt", "IngreLabel.txt", test_transforms, data_dir)
     test_loader = data.DataLoader(test_dataset, **test_params)
-    ingredients = get_ingredients_list(data_dir)
+    ingredients = get_ingredients_list_1M(data_dir)
 
     print("Loading model...")
     sys.stdout.flush()
-    model = Resnet50(num_labels, True).to(device)
+    model = Resnet50(num_labels, False).to(device)
     model.load_state_dict(torch.load("checkpoint/{}".format(model_filename), map_location=device))
     
     if torch.cuda.device_count() > 1: 
@@ -43,11 +43,15 @@ def test(model_filename, data_dir, mode, output_dir, batch_size):
         sys.stdout.flush()
         model = nn.DataParallel(model)
     model = model.to(device)
+    model.eval()
 
     print("Initializing Tests...")
     search_tree = None
     if mode == "neighborhood_search" or mode == "both":
-        search_tree = ImageNearestNeighbors(data_dir=data_dir)
+        dataset = IngredientDataset("TR.txt", "IngreLabel.txt", transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()]), data_dir)
+        params = {"batch_size": batch_size, "shuffle": False, "num_workers": 1}
+        loader = data.DataLoader(dataset, **params)
+        search_tree = ImageNearestNeighbors(model=model, device=device, dataloader=loader)
     sys.stdout.flush()
     print("Evaluating Model...")
     results, tpr, fpr, area = evaluate(model, test_loader, num_labels, ingredients, device, mode, search_tree)
@@ -72,7 +76,7 @@ if __name__ == "__main__":
     parser.add_argument("--model_filename", type=str, default="model.bin")
     parser.add_argument("--data_dir", type=str, default="data")
     parser.add_argument("--output_dir", type=str, default="analysis")
-    parser.add_argument("--batch_size", type=int, default=1)
+    parser.add_argument("--batch_size", type=int, default=24)
     args = parser.parse_args()
     args = vars(args)
 
