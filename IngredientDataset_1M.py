@@ -19,7 +19,7 @@ class IngredientDataset(data.dataset.Dataset):
         if self.transforms:
             im = self.transforms(im)
         
-        return im, torch.Tensor(self.labels[self.images[index]])
+        return im, torch.Tensor(self.labels[self.images[index][1:]])
 
     def __len__(self):
         return len(self.images)

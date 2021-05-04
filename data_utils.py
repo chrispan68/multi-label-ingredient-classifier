@@ -55,6 +55,8 @@ def read_inputs_1M(images_file, labels_file, data_dir):
     with open("{}/{}".format(data_dir, labels_file)) as f:
         for line in f:
             words = line.split()
+            if len(words) <= 1:
+                continue
             filename = words[0]
             #Converts the labels from -1, 1 to 0, 1
             labels[filename] = (np.asarray([int(i) for i in words[1:]]) + 1) * 0.5
