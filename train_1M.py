@@ -11,7 +11,7 @@ import sys
 from sklearn.metrics import classification_report, roc_curve, auc
 import matplotlib.pyplot as plt
 from utils import get_roc_curve, evaluate
-from data_utils import get_ingredients_list
+from data_utils import get_ingredients_list_1M
 from model import Resnet50
 
 def train(
