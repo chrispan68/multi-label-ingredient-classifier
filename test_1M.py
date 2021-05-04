@@ -1,6 +1,6 @@
 import argparse
 import numpy as np
-from IngredientDataset_1M import IngredientDataset
+from IngredientDataset import IngredientDataset
 import torch
 import torch.nn as nn
 from torch.utils import data
@@ -11,7 +11,7 @@ import sys
 from sklearn.metrics import classification_report, roc_curve, auc
 import matplotlib.pyplot as plt
 from utils import get_roc_curve, evaluate
-from data_utils import get_ingredients_list_1M
+from data_utils import get_ingredients_list
 from model import Resnet50
 from nearest_neighbor_query import ImageNearestNeighbors, encode
 import torch.multiprocessing
@@ -31,7 +31,7 @@ def test(model_filename, data_dir, mode, output_dir, batch_size):
     sys.stdout.flush()
     test_dataset = IngredientDataset("TE.txt", "IngreLabel.txt", test_transforms, data_dir)
     test_loader = data.DataLoader(test_dataset, **test_params)
-    ingredients = get_ingredients_list_1M(data_dir)
+    ingredients = get_ingredients_list(data_dir)
 
     print("Loading model...")
     sys.stdout.flush()
