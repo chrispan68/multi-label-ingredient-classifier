@@ -1,6 +1,6 @@
 import argparse
 import numpy as np
-from IngredientDataset import IngredientDataset
+from IngredientDataset_1M import IngredientDataset
 import torch
 import torch.nn as nn
 from torch.utils import data
