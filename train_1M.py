@@ -1,6 +1,6 @@
 import argparse
 import numpy as np
-from IngredientDataset_1M import IngredientDataset
+from IngredientDataset import IngredientDataset
 import torch
 import torch.nn as nn
 from torch.utils import data
@@ -45,12 +45,12 @@ def train(
     )
     print("Loading Dataset...")
     sys.stdout.flush()
-    train_dataset = IngredientDataset("TR.txt", "IngreLabel.txt", train_transforms, data_dir)
-    test_dataset = IngredientDataset("VAL.txt", "IngreLabel.txt", test_transforms, data_dir)
+    train_dataset = IngredientDataset("TR.txt", "IngreLabel.txt", train_transforms, f'/{data_dir}/train')
+    test_dataset = IngredientDataset("VAL.txt", "IngreLabel.txt", test_transforms, f'/{data_dir}/val')
     train_loader = data.DataLoader(train_dataset, **train_params)
     test_loader = data.DataLoader(test_dataset, **test_params)
     total_steps = len(train_loader)
-    ingredients = get_ingredients_list(data_dir)
+    ingredients = get_ingredients_list_1M(data_dir)
 
     print("Loading model...")
     sys.stdout.flush()
@@ -133,7 +133,7 @@ if __name__ == "__main__":
     parser.add_argument("--initialization", type=str, choices=["random", "pretrained", "from_file"], default="pretrained")
     parser.add_argument("--model_filename", type=str, default="model.bin")
     parser.add_argument("--optimizer_filename", type=str, default="optimizer.bin")
-    parser.add_argument("--data_dir", type=str, default="data")
+    parser.add_argument("--data_dir", type=str, default="/n/fs/pvl-mvs/sahanp_dev/datasets/food/1M_data")
     args = parser.parse_args()
     args = vars(args)
 
