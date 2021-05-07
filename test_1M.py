@@ -22,6 +22,8 @@ def test(model_filename, data_dir, mode, output_dir, batch_size, use_resnet):
     Evaluates the model on the test set. 
     '''
     num_labels = 353
+    if use_resnet:
+        num_labels = 1000
     test_params = {"batch_size": batch_size, "shuffle": True, "num_workers": 1}
     test_transforms = transforms.Compose(
         [transforms.Resize((224, 224)), transforms.ToTensor()]
@@ -54,7 +56,7 @@ def test(model_filename, data_dir, mode, output_dir, batch_size, use_resnet):
         dataset = IngredientDataset("TR.txt", "IngreLabel.txt", transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()]), f'{data_dir}/train')
         params = {"batch_size": batch_size, "shuffle": False, "num_workers": 1}
         loader = data.DataLoader(dataset, **params)
-        search_tree = ImageNearestNeighbors(model=model, device=device, dataloader=loader,num_ingredients=1000)
+        search_tree = ImageNearestNeighbors(model=model, device=device, dataloader=loader,num_ingredients=1000, input_size=num_labels)
     sys.stdout.flush()
     print("Evaluating Model...")
     results, tpr, fpr, area = evaluate(model, test_loader, num_labels, ingredients, device, mode, search_tree)
