@@ -1,4 +1,5 @@
 data
+checkpoint
 __pycache__
 .vscode
 *.out
