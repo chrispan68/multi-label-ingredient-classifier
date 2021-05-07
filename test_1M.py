@@ -21,7 +21,7 @@ def test(model_filename, data_dir, mode, output_dir, batch_size):
     '''
     Evaluates the model on the test set. 
     '''
-    num_labels = 353
+    num_labels = 1000
     test_params = {"batch_size": batch_size, "shuffle": True, "num_workers": 1}
     test_transforms = transforms.Compose(
         [transforms.Resize((224, 224)), transforms.ToTensor()]
@@ -31,7 +31,7 @@ def test(model_filename, data_dir, mode, output_dir, batch_size):
     sys.stdout.flush()
     test_dataset = IngredientDataset("TE.txt", "IngreLabel.txt", test_transforms, data_dir)
     test_loader = data.DataLoader(test_dataset, **test_params)
-    ingredients = get_ingredients_list_1M(data_dir)
+    ingredients = get_ingredients_list_1M(data_dir)(data_dir)
 
     print("Loading model...")
     sys.stdout.flush()
@@ -72,10 +72,10 @@ def test(model_filename, data_dir, mode, output_dir, batch_size):
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", type=str, choices=["baseline", "neighborhood_search", "both"], default="baseline")
+    parser.add_argument("--mode", type=str, choices=["baseline", "neighborhood_search", "both"], default="neighborhood_search")
     parser.add_argument("--model_filename", type=str, default="model.bin")
-    parser.add_argument("--data_dir", type=str, default="data")
-    parser.add_argument("--output_dir", type=str, default="analysis")
+    parser.add_argument("--data_dir", type=str, default="/n/fs/pvl-mvs/sahanp_dev/datasets/food/1M_data")
+    parser.add_argument("--output_dir", type=str, default="analysis_1M_neighborhood_search")
     parser.add_argument("--batch_size", type=int, default=24)
     args = parser.parse_args()
     args = vars(args)
