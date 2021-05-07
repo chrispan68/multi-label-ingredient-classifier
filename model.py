@@ -35,5 +35,5 @@ class Resnet50_baseline(nn.Module):
 
     def forward(self, x):
         ret = self.sigm(self.base_model(x))
-        print(ret.shape)
+        # print(ret.shape)
         return ret
