@@ -13,7 +13,7 @@ class IngredientDataset(data.dataset.Dataset):
         self.transforms = transforms
 
     def __getitem__(self, index):
-        im = Image.open("{}/{}".format(self.data_dir, self.images[index]))
+        im = Image.open("{}{}".format(self.data_dir, self.images[index]))
         if im.getbands()[0] == "L" or im.mode == "CMYK":
             im = im.convert("RGB")
         if self.transforms:
