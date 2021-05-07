@@ -29,7 +29,7 @@ def test(model_filename, data_dir, mode, output_dir, batch_size, use_resnet):
 
     print("Loading Dataset...")
     sys.stdout.flush()
-    test_dataset = IngredientDataset("TE.txt", "IngreLabel.txt", test_transforms, f'test/{data_dir}')
+    test_dataset = IngredientDataset("TE.txt", "IngreLabel.txt", test_transforms, f'{data_dir}/test')
     test_loader = data.DataLoader(test_dataset, **test_params)
     ingredients = get_ingredients_list_1M(data_dir)
 
@@ -51,7 +51,7 @@ def test(model_filename, data_dir, mode, output_dir, batch_size, use_resnet):
     print("Initializing Tests...")
     search_tree = None
     if mode == "neighborhood_search" or mode == "both":
-        dataset = IngredientDataset("TR.txt", "IngreLabel.txt", transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()]), f'train/{data_dir}')
+        dataset = IngredientDataset("TR.txt", "IngreLabel.txt", transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()]), f'{data_dir}/train')
         params = {"batch_size": batch_size, "shuffle": False, "num_workers": 1}
         loader = data.DataLoader(dataset, **params)
         search_tree = ImageNearestNeighbors(model=model, device=device, dataloader=loader,num_ingredients=1000)
