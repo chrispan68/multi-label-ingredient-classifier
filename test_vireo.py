@@ -79,7 +79,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--mode", type=str, choices=["baseline", "neighborhood_search", "both"], default="neighborhood_search")
     parser.add_argument("--model_filename", type=str, default="model.bin")
-    parser.add_argument("--data_dir", type=str, default="/n/fs/pvl-mvs/sahanp_dev/datasets/food/1M_data")
+    parser.add_argument("--data_dir", type=str, default="/n/fs/pvl-mvs/sahanp_dev/datasets/food/vireo")
     parser.add_argument("--output_dir", type=str, default="analysis_1M_neighborhood_search")
     parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--use_resnet", type=bool, default=False)
