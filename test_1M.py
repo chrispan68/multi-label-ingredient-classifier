@@ -12,12 +12,12 @@ from sklearn.metrics import classification_report, roc_curve, auc
 import matplotlib.pyplot as plt
 from utils import get_roc_curve, evaluate
 from data_utils import get_ingredients_list_1M
-from model import Resnet50
+from model import Resnet50, Resnet50_baseline
 from nearest_neighbor_query import ImageNearestNeighbors
 import torch.multiprocessing
 torch.multiprocessing.set_sharing_strategy('file_system')
 
-def test(model_filename, data_dir, mode, output_dir, batch_size):
+def test(model_filename, data_dir, mode, output_dir, batch_size, use_resnet):
     '''
     Evaluates the model on the test set. 
     '''
@@ -29,14 +29,17 @@ def test(model_filename, data_dir, mode, output_dir, batch_size):
 
     print("Loading Dataset...")
     sys.stdout.flush()
-    test_dataset = IngredientDataset("TE.txt", "IngreLabel.txt", test_transforms, f'{data_dir}/test')
+    test_dataset = IngredientDataset("test/TE.txt", "IngreLabel.txt", test_transforms, data_dir)
     test_loader = data.DataLoader(test_dataset, **test_params)
     ingredients = get_ingredients_list_1M(data_dir)
 
     print("Loading model...")
     sys.stdout.flush()
     model = Resnet50(num_labels, False).to(device)
-    model.load_state_dict(torch.load("/n/fs/pvl-mvs/sahanp_dev/datasets/multi-label-ingredient-classifier/checkpoint/{}".format(model_filename), map_location=device))
+    if not use_resnet:
+        model.load_state_dict(torch.load("checkpoint/{}".format(model_filename), map_location=device))
+    else:
+        model = Resnet50_baseline(True).to(device)
     
     if torch.cuda.device_count() > 1: 
         print("Using", torch.cuda.device_count(), "GPUs.")
@@ -48,7 +51,7 @@ def test(model_filename, data_dir, mode, output_dir, batch_size):
     print("Initializing Tests...")
     search_tree = None
     if mode == "neighborhood_search" or mode == "both":
-        dataset = IngredientDataset("TR.txt", "IngreLabel.txt", transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()]), f'{data_dir}/train')
+        dataset = IngredientDataset("train/TR.txt", "IngreLabel.txt", transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()]), data_dir)
         params = {"batch_size": batch_size, "shuffle": False, "num_workers": 1}
         loader = data.DataLoader(dataset, **params)
         search_tree = ImageNearestNeighbors(model=model, device=device, dataloader=loader,num_ingredients=1000)
@@ -76,7 +79,8 @@ if __name__ == "__main__":
     parser.add_argument("--model_filename", type=str, default="model.bin")
     parser.add_argument("--data_dir", type=str, default="/n/fs/pvl-mvs/sahanp_dev/datasets/food/1M_data")
     parser.add_argument("--output_dir", type=str, default="analysis_1M_neighborhood_search")
-    parser.add_argument("--batch_size", type=int, default=256)
+    parser.add_argument("--batch_size", type=int, default=24)
+    parser.add_argument("--use_resnet", type=bool, default=False)
     args = parser.parse_args()
     args = vars(args)
 
@@ -85,6 +89,7 @@ if __name__ == "__main__":
     data_dir = args["data_dir"]
     output_dir = args["output_dir"]
     batch_size = args["batch_size"]
+    use_resnet = args["use_resnet"]
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     test(
@@ -92,5 +97,6 @@ if __name__ == "__main__":
         data_dir, 
         mode,
         output_dir, 
-        batch_size
+        batch_size,
+        use_resnet
     )

@@ -22,3 +22,18 @@ class Resnet50(nn.Module):
 
     def forward(self, x):
         return self.sigm(self.base_model(x))
+
+class Resnet50_baseline(nn.Module):
+    '''
+    Resnet architecture for multi-label ingredient classification
+    '''
+    def __init__(self, is_pretrained=True):
+        super().__init__()
+        resnet = torchvision.models.resnet50(pretrained=is_pretrained)
+        self.base_model = resnet
+        self.sigm = nn.Sigmoid()
+
+    def forward(self, x):
+        ret = self.sigm(self.base_model(x))
+        print(ret.shape)
+        return ret
