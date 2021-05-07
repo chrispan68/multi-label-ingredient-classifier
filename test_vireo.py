@@ -1,6 +1,6 @@
 import argparse
 import numpy as np
-from IngredientDataset_1M import IngredientDataset
+from IngredientDataset import IngredientDataset
 import torch
 import torch.nn as nn
 from torch.utils import data
@@ -11,7 +11,7 @@ import sys
 from sklearn.metrics import classification_report, roc_curve, auc
 import matplotlib.pyplot as plt
 from utils import get_roc_curve, evaluate
-from data_utils import get_ingredients_list_1M
+from data_utils import get_ingredients_list
 from model import Resnet50, Resnet50_baseline
 from nearest_neighbor_query import ImageNearestNeighbors
 import torch.multiprocessing
@@ -29,9 +29,9 @@ def test(model_filename, data_dir, mode, output_dir, batch_size, use_resnet):
 
     print("Loading Dataset...")
     sys.stdout.flush()
-    test_dataset = IngredientDataset("TE.txt", "IngreLabel.txt", test_transforms, f'test/{data_dir}')
+    test_dataset = IngredientDataset("test/TE.txt", "IngreLabel.txt", test_transforms, data_dir)
     test_loader = data.DataLoader(test_dataset, **test_params)
-    ingredients = get_ingredients_list_1M(data_dir)
+    ingredients = get_ingredients_list(data_dir)
 
     print("Loading model...")
     sys.stdout.flush()
@@ -51,10 +51,10 @@ def test(model_filename, data_dir, mode, output_dir, batch_size, use_resnet):
     print("Initializing Tests...")
     search_tree = None
     if mode == "neighborhood_search" or mode == "both":
-        dataset = IngredientDataset("TR.txt", "IngreLabel.txt", transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()]), f'train/{data_dir}')
+        dataset = IngredientDataset("train/TR.txt", "IngreLabel.txt", transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()]), data_dir)
         params = {"batch_size": batch_size, "shuffle": False, "num_workers": 1}
         loader = data.DataLoader(dataset, **params)
-        search_tree = ImageNearestNeighbors(model=model, device=device, dataloader=loader,num_ingredients=1000)
+        search_tree = ImageNearestNeighbors(model=model, device=device, dataloader=loader,num_ingredients=353)
     sys.stdout.flush()
     print("Evaluating Model...")
     results, tpr, fpr, area = evaluate(model, test_loader, num_labels, ingredients, device, mode, search_tree)
@@ -78,7 +78,7 @@ if __name__ == "__main__":
     parser.add_argument("--mode", type=str, choices=["baseline", "neighborhood_search", "both"], default="neighborhood_search")
     parser.add_argument("--model_filename", type=str, default="model.bin")
     parser.add_argument("--data_dir", type=str, default="/n/fs/pvl-mvs/sahanp_dev/datasets/food/1M_data")
-    parser.add_argument("--output_dir", type=str, default="analysis_1M_neighborhood_search")
+    parser.add_argument("--output_dir", type=str, default="analysis_neighborhood_search_resnet")
     parser.add_argument("--batch_size", type=int, default=24)
     parser.add_argument("--use_resnet", type=bool, default=False)
     args = parser.parse_args()
