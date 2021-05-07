@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 from utils import get_roc_curve, evaluate
 from data_utils import get_ingredients_list
 from model import Resnet50
-from nearest_neighbor_query import ImageNearestNeighbors
+from nearest_neighbor_query import ImageNearestNeighbors, encode
 import torch.multiprocessing
 torch.multiprocessing.set_sharing_strategy('file_system')
 
@@ -29,13 +29,13 @@ def test(model_filename, data_dir, mode, output_dir, batch_size):
 
     print("Loading Dataset...")
     sys.stdout.flush()
-    test_dataset = IngredientDataset("test/TE.txt", "IngreLabel.txt", test_transforms, data_dir)
+    test_dataset = IngredientDataset("TE.txt", "IngreLabel.txt", test_transforms, data_dir)
     test_loader = data.DataLoader(test_dataset, **test_params)
     ingredients = get_ingredients_list(data_dir)
 
     print("Loading model...")
     sys.stdout.flush()
-    model = Resnet50(num_labels, False).to(device)
+    model = Resnet50(num_labels, True).to(device)
     model.load_state_dict(torch.load("checkpoint/{}".format(model_filename), map_location=device))
     
     if torch.cuda.device_count() > 1: 
@@ -43,15 +43,11 @@ def test(model_filename, data_dir, mode, output_dir, batch_size):
         sys.stdout.flush()
         model = nn.DataParallel(model)
     model = model.to(device)
-    model.eval()
 
     print("Initializing Tests...")
     search_tree = None
     if mode == "neighborhood_search" or mode == "both":
-        dataset = IngredientDataset("train/TR.txt", "IngreLabel.txt", transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()]), data_dir)
-        params = {"batch_size": batch_size, "shuffle": False, "num_workers": 1}
-        loader = data.DataLoader(dataset, **params)
-        search_tree = ImageNearestNeighbors(model=model, device=device, dataloader=loader)
+        search_tree = ImageNearestNeighbors(data_dir=data_dir)
     sys.stdout.flush()
     print("Evaluating Model...")
     results, tpr, fpr, area = evaluate(model, test_loader, num_labels, ingredients, device, mode, search_tree)
@@ -76,7 +72,7 @@ if __name__ == "__main__":
     parser.add_argument("--model_filename", type=str, default="model.bin")
     parser.add_argument("--data_dir", type=str, default="data")
     parser.add_argument("--output_dir", type=str, default="analysis")
-    parser.add_argument("--batch_size", type=int, default=24)
+    parser.add_argument("--batch_size", type=int, default=1)
     args = parser.parse_args()
     args = vars(args)
 
