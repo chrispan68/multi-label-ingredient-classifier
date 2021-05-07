@@ -31,7 +31,7 @@ def test(model_filename, data_dir, mode, output_dir, batch_size):
     sys.stdout.flush()
     test_dataset = IngredientDataset("test/TE.txt", "IngreLabel.txt", test_transforms, data_dir)
     test_loader = data.DataLoader(test_dataset, **test_params)
-    ingredients = get_ingredients_list_1M(data_dir)(data_dir)
+    ingredients = get_ingredients_list_1M(data_dir)
 
     print("Loading model...")
     sys.stdout.flush()
