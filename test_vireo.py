@@ -22,6 +22,8 @@ def test(model_filename, data_dir, mode, output_dir, batch_size, use_resnet):
     Evaluates the model on the test set. 
     '''
     num_labels = 353
+    if use_resnet:
+        num_labels = 1000
     test_params = {"batch_size": batch_size, "shuffle": True, "num_workers": 1}
     test_transforms = transforms.Compose(
         [transforms.Resize((224, 224)), transforms.ToTensor()]
@@ -29,7 +31,7 @@ def test(model_filename, data_dir, mode, output_dir, batch_size, use_resnet):
 
     print("Loading Dataset...")
     sys.stdout.flush()
-    test_dataset = IngredientDataset("test/TE.txt", "IngreLabel.txt", test_transforms, data_dir)
+    test_dataset = IngredientDataset("TE.txt", "IngreLabel.txt", test_transforms, f'{data_dir}')
     test_loader = data.DataLoader(test_dataset, **test_params)
     ingredients = get_ingredients_list(data_dir)
 
@@ -37,7 +39,7 @@ def test(model_filename, data_dir, mode, output_dir, batch_size, use_resnet):
     sys.stdout.flush()
     model = Resnet50(num_labels, False).to(device)
     if not use_resnet:
-        model.load_state_dict(torch.load("checkpoint/{}".format(model_filename), map_location=device))
+        model.load_state_dict(torch.load("/n/fs/pvl-mvs/sahanp_dev/datasets/multi-label-ingredient-classifier/checkpoint/{}".format(model_filename), map_location=device))
     else:
         model = Resnet50_baseline(True).to(device)
     
@@ -51,10 +53,10 @@ def test(model_filename, data_dir, mode, output_dir, batch_size, use_resnet):
     print("Initializing Tests...")
     search_tree = None
     if mode == "neighborhood_search" or mode == "both":
-        dataset = IngredientDataset("train/TR.txt", "IngreLabel.txt", transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()]), data_dir)
+        dataset = IngredientDataset("TR.txt", "IngreLabel.txt", transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()]), f'{data_dir}')
         params = {"batch_size": batch_size, "shuffle": False, "num_workers": 1}
         loader = data.DataLoader(dataset, **params)
-        search_tree = ImageNearestNeighbors(model=model, device=device, dataloader=loader,num_ingredients=353)
+        search_tree = ImageNearestNeighbors(model=model, device=device, dataloader=loader,num_ingredients=1000, input_size=num_labels)
     sys.stdout.flush()
     print("Evaluating Model...")
     results, tpr, fpr, area = evaluate(model, test_loader, num_labels, ingredients, device, mode, search_tree)
@@ -78,8 +80,8 @@ if __name__ == "__main__":
     parser.add_argument("--mode", type=str, choices=["baseline", "neighborhood_search", "both"], default="neighborhood_search")
     parser.add_argument("--model_filename", type=str, default="model.bin")
     parser.add_argument("--data_dir", type=str, default="/n/fs/pvl-mvs/sahanp_dev/datasets/food/1M_data")
-    parser.add_argument("--output_dir", type=str, default="analysis_neighborhood_search_resnet")
-    parser.add_argument("--batch_size", type=int, default=24)
+    parser.add_argument("--output_dir", type=str, default="analysis_1M_neighborhood_search")
+    parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--use_resnet", type=bool, default=False)
     args = parser.parse_args()
     args = vars(args)
