@@ -39,7 +39,7 @@ def test(model_filename, data_dir, mode, output_dir, batch_size, use_resnet):
     sys.stdout.flush()
     model = Resnet50(num_labels, False).to(device)
     if not use_resnet:
-        model.load_state_dict(torch.load("checkpoint/{}".format(model_filename), map_location=device))
+        model.load_state_dict(torch.load("/n/fs/pvl-mvs/sahanp_dev/datasets/multi-label-ingredient-classifier/checkpoint/{}".format(model_filename), map_location=device))
     else:
         model = Resnet50_baseline(True).to(device)
     
