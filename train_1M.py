@@ -118,10 +118,11 @@ def train(
             sys.stdout.flush()
 
     # Save final version of the model
-    if not os.path.exists("checkpoint"):
-        os.mkdir("checkpoint")
-    torch.save(model.state_dict(), "checkpoint/{}".format(model_filename))
-    torch.save(optimizer.state_dict(), "checkpoint/{}".format(optimizer_filename))
+    model_dir = '/n/fs/pvl-mvs/sahanp_dev/datasets/multi-label-ingredient-classifier/checkpoint'
+    if not os.path.exists(model_dir):
+        os.mkdir(model_dir)
+    torch.save(model.state_dict(), f"{model_dir}/{model_filename}")
+    torch.save(optimizer.state_dict(), f"{model_dir}/{optimizer_filename}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -131,8 +132,8 @@ if __name__ == "__main__":
     parser.add_argument("--learning_rate", type=float, default=0.001)
     parser.add_argument("--batch_size", type=int, default=24)
     parser.add_argument("--initialization", type=str, choices=["random", "pretrained", "from_file"], default="pretrained")
-    parser.add_argument("--model_filename", type=str, default="model.bin")
-    parser.add_argument("--optimizer_filename", type=str, default="optimizer.bin")
+    parser.add_argument("--model_filename", type=str, default="model_1M.bin")
+    parser.add_argument("--optimizer_filename", type=str, default="optimizer_1M.bin")
     parser.add_argument("--data_dir", type=str, default="/n/fs/pvl-mvs/sahanp_dev/datasets/food/1M_data")
     args = parser.parse_args()
     args = vars(args)
