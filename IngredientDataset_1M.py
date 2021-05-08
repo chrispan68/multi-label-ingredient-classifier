@@ -22,5 +22,6 @@ class IngredientDataset(data.dataset.Dataset):
         return im, torch.Tensor(self.labels[self.images[index][1:]])
 
     def __len__(self):
-        return len(self.images)
+        # return len(self.images)
+        return 1000
 
