@@ -75,6 +75,7 @@ def train(
 
     print("Beginning Training...")
     sys.stdout.flush()
+    model_dir = '/n/fs/pvl-mvs/sahanp_dev/datasets/multi-label-ingredient-classifier/checkpoint'
     for epoch in range(num_epochs):
         for i, (images, labels) in enumerate(train_loader):
             # Batchnorm1D can't handle batch size of 1
@@ -105,8 +106,8 @@ def train(
             sys.stdout.flush()
             if not os.path.exists("checkpoint"):
                 os.mkdir("checkpoint")
-            torch.save(model.state_dict(), "checkpoint/{}".format(model_filename))
-            torch.save(optimizer.state_dict(), "checkpoint/{}".format(optimizer_filename))
+            torch.save(model.state_dict(), f"{model_dir}/epoch_{epoch}_{model_filename}")
+            torch.save(optimizer.state_dict(), f"{model_dir}/epoch_{epoch}_{optimizer_filename}")
         
         if (epoch + 1) % eval_interval == 0:
             print("Evaluating:")
@@ -118,7 +119,6 @@ def train(
             sys.stdout.flush()
 
     # Save final version of the model
-    model_dir = '/n/fs/pvl-mvs/sahanp_dev/datasets/multi-label-ingredient-classifier/checkpoint'
     if not os.path.exists(model_dir):
         os.mkdir(model_dir)
     torch.save(model.state_dict(), f"{model_dir}/{model_filename}")
@@ -130,7 +130,7 @@ if __name__ == "__main__":
     parser.add_argument("--eval_interval", type=int, default=1)
     parser.add_argument("--save_interval", type=int, default=1)
     parser.add_argument("--learning_rate", type=float, default=0.001)
-    parser.add_argument("--batch_size", type=int, default=24)
+    parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--initialization", type=str, choices=["random", "pretrained", "from_file"], default="pretrained")
     parser.add_argument("--model_filename", type=str, default="model_1M.bin")
     parser.add_argument("--optimizer_filename", type=str, default="optimizer_1M.bin")
