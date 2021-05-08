@@ -77,6 +77,9 @@ def train(
     sys.stdout.flush()
     model_dir = '/n/fs/pvl-mvs/sahanp_dev/datasets/multi-label-ingredient-classifier/checkpoint'
     for epoch in range(num_epochs):
+        start = torch.cuda.Event(enable_timing=True)
+        end = torch.cuda.Event(enable_timing=True)
+        start.record()
         for i, (images, labels) in enumerate(train_loader):
             # Batchnorm1D can't handle batch size of 1
             if images.shape[0] < 2:
@@ -100,7 +103,9 @@ def train(
                     )
                 )
                 sys.stdout.flush()
-        
+        end.record()
+        torch.cuda.synchronize()
+        print(f'epoch {epoch} - {start.elapsed_time(end)}')
         if (epoch + 1) % save_interval == 0:
             print("Saving model...")
             sys.stdout.flush()
