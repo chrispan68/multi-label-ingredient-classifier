@@ -59,7 +59,7 @@ def test(model_filename, data_dir, mode, output_dir, batch_size, use_resnet):
         search_tree = ImageNearestNeighbors(model=model, device=device, dataloader=loader,num_ingredients=353, input_size=num_labels)
     sys.stdout.flush()
     print("Evaluating Model...")
-    results, tpr, fpr, area = evaluate(model, test_loader, num_labels, ingredients, device, mode, search_tree)
+    results, tpr, fpr, area = evaluate(model, test_loader, 353, ingredients, device, mode, search_tree)
     print("Testing Results:")
     print(results)
 
