@@ -21,7 +21,7 @@ def test(model_filename, data_dir, mode, output_dir, batch_size, use_resnet):
     '''
     Evaluates the model on the test set. 
     '''
-    num_labels = 353
+    num_labels = 1000
     if use_resnet:
         num_labels = 1000
     test_params = {"batch_size": batch_size, "shuffle": True, "num_workers": 1}
@@ -77,7 +77,7 @@ def test(model_filename, data_dir, mode, output_dir, batch_size, use_resnet):
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", type=str, choices=["baseline", "neighborhood_search", "both"], default="neighborhood_search")
+    parser.add_argument("--mode", type=str, choices=["baseline", "neighborhood_search", "both"], default="baseline")
     parser.add_argument("--model_filename", type=str, default="model.bin")
     parser.add_argument("--data_dir", type=str, default="/n/fs/pvl-mvs/sahanp_dev/datasets/food/1M_data")
     parser.add_argument("--output_dir", type=str, default="analysis_1M_neighborhood_search")
