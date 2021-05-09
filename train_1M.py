@@ -135,7 +135,7 @@ if __name__ == "__main__":
     parser.add_argument("--eval_interval", type=int, default=1)
     parser.add_argument("--save_interval", type=int, default=1)
     parser.add_argument("--learning_rate", type=float, default=0.001)
-    parser.add_argument("--batch_size", type=int, default=128)
+    parser.add_argument("--batch_size", type=int, default=96)
     parser.add_argument("--initialization", type=str, choices=["random", "pretrained", "from_file"], default="pretrained")
     parser.add_argument("--model_filename", type=str, default="model_1M.bin")
     parser.add_argument("--optimizer_filename", type=str, default="optimizer_1M.bin")
