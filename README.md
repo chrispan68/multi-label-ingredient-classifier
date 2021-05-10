@@ -1,28 +1,9 @@
-# Multi label ingredient classification:
+# Neighborhood consensus for Multi-Label Ingredient Classification
 
-Initially cloned from: https://github.com/dfan/awa2-zero-shot-learning
+Performs multi-label ingredient classification. We provide support for using a baseline deep learning approach as well as using neighborhood consensus to classify.
 
-## Data
+## Datasets
 
-Vireo-172 Dataset: http://vireo.cs.cityu.edu.hk/VireoFood172
+Vireo172: http://vireo.cs.cityu.edu.hk/VireoFood172/
+Recipes1M+: http://pic2recipe.csail.mit.edu/
 
-## Model
-
-Resnet-50 backbone with a linear classifier. 
-
-## Results
-
-Micro-F1: 0.72
-Macro-F1: 0.57
-
-## Usage
-
-### Training
-
-Unzip the data from Vireo172 into a new directory titled data and run:
-python train.py
-
-### Testing
-
-Make sure you have a model.bin file in checkpoint and run 
-python train.py --mode test
