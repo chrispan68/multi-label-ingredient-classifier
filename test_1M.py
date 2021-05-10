@@ -78,7 +78,7 @@ def test(model_filename, data_dir, mode, output_dir, batch_size, use_resnet):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--mode", type=str, choices=["baseline", "neighborhood_search", "both"], default="baseline")
-    parser.add_argument("--model_filename", type=str, default="model.bin")
+    parser.add_argument("--model_filename", type=str, default="epoch_0_model_1M.bin")
     parser.add_argument("--data_dir", type=str, default="/n/fs/pvl-mvs/sahanp_dev/datasets/food/1M_data")
     parser.add_argument("--output_dir", type=str, default="analysis_1M_neighborhood_search")
     parser.add_argument("--batch_size", type=int, default=128)
